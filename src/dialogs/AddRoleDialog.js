@@ -8,16 +8,15 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Select from '@material-ui/core/Select'
 import { FormControl } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel'
 import FormHelperText from '@material-ui/core/FormHelperText'
+import {createRole} from '../services/RoleService'
 
 export default class AddRoleDialog extends Component{
 state = {
     open: false,
     roleForm: {
       rolename:'',
-      classification:'',
       argument:''
     }
 }
@@ -25,6 +24,19 @@ state = {
     this.setState({
         open: !this.state.open,
     })
+}
+
+clickMe = () => {
+  this.props.clickMe()
+}
+
+handleSave = (rolename,argument) => {
+  createRole(rolename,argument,"somethinng");
+  this.clickMe();
+  this.setState({
+    open: !this.state.open,
+  })
+  
 }
 
 handleChange = name => ({target: {value} }) => {
@@ -38,7 +50,7 @@ handleChange = name => ({target: {value} }) => {
 
 render(){
 
-    const {open, roleForm: {rolename,classification,argument}} = this.state
+    const {open, roleForm: {rolename,argument}} = this.state
     
 
     return(
@@ -64,30 +76,31 @@ render(){
               fullWidth
               className="textff"
             />
-            <FormHelperText id="my-helper-text" color="red">*Required</FormHelperText>
+            <FormHelperText id="my-helper-text">*Required</FormHelperText>
            </FormControl>
            <FormControl >
            <FormLabel>Metadata classification</FormLabel>
-        <Select native required="true" label="Metadata classification" id="grouped-native-select">
+        <Select native required="true" value={argument} onChange={this.handleChange("argument")} label="Metadata classification" id="grouped-native-select">
           <option aria-label="None" value="Metadata classification" />
           <optgroup label="Type">
-            <option value={argument}>Web application</option>
-            <option value={argument}>Business plan</option>
-            <option value={argument}>Contracts</option>
-            <option value={argument}>Clients</option>
+            <option value="web_application">Web application</option>
+            <option value="business_plan">Business plan</option>
+            <option value="contracts">Contracts</option>
+            <option value="client_records">Clients records</option>
+            <option value="financial_documents">Financial documents</option>
           </optgroup>
           <optgroup label="Category">
-            <option value={argument}>Administrative</option>
-            <option value={argument}>Business</option>
+            <option value="administrative">Administrative</option>
+            <option value="business">Business</option>
           </optgroup>
           <optgroup label="Sensitivity">
-            <option value={argument}>very sensitive</option>
-            <option value={argument}>sensitive</option>
-            <option value={argument}>only internal use</option>
-            <option value={argument}>business external use</option>
+            <option value="very_sensitive">very sensitive</option>
+            <option value="sensitive">sensitive</option>
+            <option value="internal_use">only internal use</option>
+            <option value="business_external_use">business external use</option>
           </optgroup>
           <optgroup label="Owners">
-            <option value={7}>Owners</option>
+            <option value="owners">Owners</option>
           </optgroup>
         </Select>
         <FormHelperText id="my-helper-text" color="red">*Required</FormHelperText>
@@ -97,7 +110,7 @@ render(){
             <Button onClick={this.handleClickOpen} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.handleClickOpen} color="primary" variant="contained">
+            <Button onClick={(event) => this.handleSave(rolename,argument)} color="primary" variant="contained">
               Save
             </Button>
           </DialogActions>

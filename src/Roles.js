@@ -7,33 +7,33 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 import axios from 'axios';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
-import IconButton from '@material-ui/core/IconButton'
-import deleteRole from './services/RoleService'
-import Button from '@material-ui/core/Button'
-import AddRoleDialog from './dialogs/AddRoleDialog'
+import IconButton from '@material-ui/core/IconButton';
+import {deleteRole} from './services/RoleService';
+import Button from '@material-ui/core/Button';
+import AddRoleDialog from './dialogs/AddRoleDialog';
 
-const RoleList = () => {
+const Roles = () => {
 const [roleList, setroleList] = useState([]);
 const [reupload, setreupload] = useState(false);
 const fetchRoleList =  () => {
   axios.get('http://localhost:8080/policy/role').then(res => {
   console.log(res);
-  setroleList(res.data)})
+  setroleList(res.data)});
 }
 useEffect(() => {
   fetchRoleList();
  },[]);
 
  useEffect(()=>{
-  fetchRoleList()
+  fetchRoleList();
   return () => {
-    setreupload(false)
+    setreupload(false);
   }
- },[reupload])
+ },[reupload]);
 
- function handleDelete(id){
+ const handleDelete = (id) => {
   deleteRole(id);
   setTimeout(() => {
     setreupload(true);
@@ -43,38 +43,20 @@ useEffect(() => {
  
 
  function handleUpdateRole(id){
-console.log(`update clicked on row with id ${id}`)
+console.log(`update clicked on row with id ${id}`);
  }
- return roleList.map((role,index) => {
-return(<><TableRow key={index}>
-            
-              <TableCell>{role.roleId}</TableCell>
-              <TableCell>{role.roleName}</TableCell>
-              <TableCell>{role.rscl.classification}</TableCell>
-              <TableCell>{role.rscl.classification_arg}</TableCell>
-              <TableCell>
-              <Button variant="outlined" color="primary">
-                Manage Levels
-              </Button>
-              <IconButton onClick={(event) => handleDelete(role.roleId)}>
-                  <DeleteForeverIcon color="primary" />
-              </IconButton>
-              <IconButton onClick={(event) => handleUpdateRole(role.roleId)}>
-                <BorderColorIcon color="primary"/>
-              </IconButton>
-              </TableCell>
-            </TableRow></>);
- });
-}
-  function Roles(){
-  /*  function handleAddRole() {
+
+
+  /*function Roles(){
+    function handleAddRole() {
       console.log("add clicked !")
      }*/
+     
      return (  
     <React.Fragment>
       <Title>Roles (Mapped with metadata: classification and argument)</Title>
   
-       <AddRoleDialog/>
+       <AddRoleDialog clickMe={() => setreupload(true)}/>
         
       <Table size="small">
         <TableHead>
@@ -88,7 +70,28 @@ return(<><TableRow key={index}>
           </TableRow>
         </TableHead>
         <TableBody>
-          <RoleList/>
+          {
+            roleList.map((role,index) => {
+              return(<><TableRow key={index}>
+                          
+                            <TableCell>{role.roleId}</TableCell>
+                            <TableCell>{role.roleName}</TableCell>
+                            <TableCell>{role.rscl.classification}</TableCell>
+                            <TableCell>{role.rscl.classification_arg}</TableCell>
+                            <TableCell>
+                            <Button variant="outlined" color="primary">
+                              Manage Levels
+                            </Button>
+                            <IconButton onClick={ event => {handleDelete(role.roleId);}}>
+                                <DeleteForeverIcon color="primary" />
+                            </IconButton>
+                            <IconButton onClick={(event) => handleUpdateRole(role.roleId)}>
+                              <BorderColorIcon color="primary"/>
+                            </IconButton>
+                            </TableCell>
+                          </TableRow></>);
+               })
+          }
         </TableBody>
       </Table>
       
