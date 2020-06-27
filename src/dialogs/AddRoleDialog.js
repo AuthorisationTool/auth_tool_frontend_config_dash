@@ -15,23 +15,31 @@ import FormHelperText from '@material-ui/core/FormHelperText'
 export default class AddRoleDialog extends Component{
 state = {
     open: false,
+    roleForm: {
+      rolename:'',
+      classification:'',
+      argument:''
+    }
 }
  handleClickOpen = () => {
     this.setState({
         open: !this.state.open,
     })
 }
-useStyles = makeStyles((theme) => ({
-    
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120,
-    },
-  }));
+
+handleChange = name => ({target: {value} }) => {
+  this.setState({
+    roleForm: {
+    ...this.state.roleForm,
+    [name] : value,
+  }
+  })
+}
+
 render(){
 
-    const {open} = this.state
-    const classes = this.useStyles;
+    const {open, roleForm: {rolename,classification,argument}} = this.state
+    
 
     return(
         <div align="right">
@@ -51,6 +59,8 @@ render(){
               margin="dense"
               id="rolename"
               type="text"
+              value={rolename}
+              onChange={this.handleChange("rolename")}
               fullWidth
               className="textff"
             />
@@ -61,20 +71,20 @@ render(){
         <Select native required="true" label="Metadata classification" id="grouped-native-select">
           <option aria-label="None" value="Metadata classification" />
           <optgroup label="Type">
-            <option value={1}>Web application</option>
-            <option value={2}>Business plan</option>
-            <option value={2}>Contracts</option>
-            <option value={2}>Clients</option>
+            <option value={argument}>Web application</option>
+            <option value={argument}>Business plan</option>
+            <option value={argument}>Contracts</option>
+            <option value={argument}>Clients</option>
           </optgroup>
           <optgroup label="Category">
-            <option value={3}>Administrative</option>
-            <option value={4}>Business</option>
+            <option value={argument}>Administrative</option>
+            <option value={argument}>Business</option>
           </optgroup>
           <optgroup label="Sensitivity">
-            <option value={5}>very sensitive</option>
-            <option value={6}>sensitive</option>
-            <option value={5}>only internal use</option>
-            <option value={6}>business external use</option>
+            <option value={argument}>very sensitive</option>
+            <option value={argument}>sensitive</option>
+            <option value={argument}>only internal use</option>
+            <option value={argument}>business external use</option>
           </optgroup>
           <optgroup label="Owners">
             <option value={7}>Owners</option>
@@ -87,7 +97,7 @@ render(){
             <Button onClick={this.handleClickOpen} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.handleClickOpen} color="primary">
+            <Button onClick={this.handleClickOpen} color="primary" variant="contained">
               Save
             </Button>
           </DialogActions>
