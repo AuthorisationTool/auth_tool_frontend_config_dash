@@ -19,7 +19,8 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MainListItems from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
-import RoleTable from './RoleTable';
+import Roles from './Roles';
+
 
 function Copyright() {
   return (
@@ -183,7 +184,7 @@ export default function Dashboard() {
             {/* Roles */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <RoleTable />
+                <Roles />
               </Paper>
             </Grid>
           </Grid>

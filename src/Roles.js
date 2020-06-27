@@ -1,6 +1,5 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import Link from '@material-ui/core/Link';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -8,49 +7,91 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 import axios from 'axios';
-
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
+import BorderColorIcon from '@material-ui/icons/BorderColor';
+import IconButton from '@material-ui/core/IconButton'
+import deleteRole from './services/RoleService'
+import Button from '@material-ui/core/Button'
+import AddRoleDialog from './dialogs/AddRoleDialog'
 
 const RoleList = () => {
 const [roleList, setroleList] = useState([]);
-const fetchRoleList = () => {
+const [reupload, setreupload] = useState(false);
+const fetchRoleList =  () => {
   axios.get('http://localhost:8080/policy/role').then(res => {
   console.log(res);
   setroleList(res.data)})
 }
 useEffect(() => {
   fetchRoleList();
- }, []);
+ },[]);
+
+ useEffect(()=>{
+  fetchRoleList()
+  return () => {
+    setreupload(false)
+  }
+ },[reupload])
+
+ function handleDelete(id){
+  deleteRole(id);
+  setTimeout(() => {
+    setreupload(true);
+  },50);
+ }
+
+ 
+
+ function handleUpdateRole(id){
+console.log(`update clicked on row with id ${id}`)
+ }
  return roleList.map((role,index) => {
 return(<><TableRow key={index}>
+            
               <TableCell>{role.roleId}</TableCell>
               <TableCell>{role.roleName}</TableCell>
               <TableCell>{role.rscl.classification}</TableCell>
-              <TableCell align="right">{role.rscl.classification_arg}</TableCell>
+              <TableCell>{role.rscl.classification_arg}</TableCell>
+              <TableCell>
+              <Button variant="outlined" color="primary">
+                Manage Levels
+              </Button>
+              <IconButton onClick={(event) => handleDelete(role.roleId)}>
+                  <DeleteForeverIcon color="primary" />
+              </IconButton>
+              <IconButton onClick={(event) => handleUpdateRole(role.roleId)}>
+                <BorderColorIcon color="primary"/>
+              </IconButton>
+              </TableCell>
             </TableRow></>);
  });
 }
   function Roles(){
+  /*  function handleAddRole() {
+      console.log("add clicked !")
+     }*/
      return (  
     <React.Fragment>
       <Title>Roles (Mapped with metadata: classification and argument)</Title>
+  
+       <AddRoleDialog/>
+        
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Classification</TableCell>
-            <TableCell align="right">Argument</TableCell>
+            
+            <TableCell>(Identifier)</TableCell>
+            <TableCell>(Name)</TableCell>
+            <TableCell>(Classification)</TableCell>
+            <TableCell>(Argument) </TableCell>
+            <TableCell align="center"> [ Actions ]</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           <RoleList/>
         </TableBody>
       </Table>
-      <div>
-        <Link color="primary" href="#">
-          See more orders
-        </Link>
-      </div>
+      
     </React.Fragment>
   );
 }
