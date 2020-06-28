@@ -32,8 +32,8 @@ clickMe = () => {
   this.props.clickMe()
 }
 
-handleSave = (rolename,argument) => {
-  createRole(rolename,argument,"somethinng");
+handleSave = (roleId,rolename,argument) => {
+  updateRole(roleId,rolename,argument);
   this.clickMe();
   this.setState({
     open: !this.state.open,
@@ -112,7 +112,7 @@ render(){
             <Button onClick={this.handleClickOpen} color="primary">
               Cancel
             </Button>
-            <Button onClick={(event) => this.handleSave(rolename,argument)} color="primary" variant="contained">
+            <Button onClick={(event) => this.handleUpdate(this.props.roleId,this.props.rolename,this.props.argument)} color="primary" variant="contained">
               Apply
             </Button>
           </DialogActions>

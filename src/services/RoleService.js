@@ -5,8 +5,33 @@ export function deleteRole(roleId) {
 }
 
 
-export function updateRole(roleId,role) {
-    http.put(`/role/${roleId}`,role);
+export function updateRole(roleId,rolename,argument) {
+    let classification = "";
+    switch(argument){
+
+        case 'web_application':
+        case 'business_plan':
+        case 'contracts':
+        case 'client_records':
+        case 'financial_document': classification = 'type'; break;
+
+        case 'administrative':
+        case 'business': classification = 'category'; break;
+
+        case 'very_sensitive':
+        case 'sensitive':
+        case 'only_internal_use':
+        case 'business_external_use':
+        case 'public_use' : classification = 'sensitivity'; break;
+
+        default: classification = 'type'; break;
+    }
+
+    http.put(`/role/${roleId}`,{
+        "roleName": `${rolename}`,
+        "classification": `${classification}`,
+        "classificationArg": `${argument}`
+    });
 }
 
 /*function getRole(roleId) {
