@@ -177,7 +177,13 @@ export default function Dashboard() {
                
               <Switch>
                 <Route exact path="/Roles" component={Roles} render={(props) => (<><Roles/></>)}/>
-                </Switch>
+                <Route exact path="/Levels" component={Roles} render={(props) => (<><Roles/></>)}/>
+                <Route exact path="/Constraints" component={Roles} render={(props) => (<><Roles/></>)}/>
+                <Route exact path="/Users" component={Roles} render={(props) => (<><Roles/></>)}/>
+                <Route exact path="/Application" component={Roles} render={(props) => (<><Roles/></>)}/>
+                <Route exact path="/Firewall" component={Roles} render={(props) => (<><Roles/></>)}/>
+                <Route exact path="/Bluetooth_agent" component={Roles} render={(props) => (<><Roles/></>)}/>
+              </Switch>
                 
               </Paper>
             </Grid>

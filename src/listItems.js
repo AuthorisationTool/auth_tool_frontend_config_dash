@@ -8,7 +8,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import { List, Divider } from '@material-ui/core';
-import { Link, BrowserRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function MainListItems(){
   const primaryListItems = (
@@ -22,13 +22,15 @@ export default function MainListItems(){
         </ListItemIcon>
         <ListItemText primary="Roles" />
       </ListItem>
-      <ListItem button>
+
+      <ListItem button component={Link} to="/Levels"> 
         <ListItemIcon>
           <ShoppingCartIcon />
         </ListItemIcon>
         <ListItemText primary="Levels" />
       </ListItem>
-      <ListItem button>
+
+      <ListItem button component={Link} to="/Constraints">
         <ListItemIcon>
           <PeopleIcon />
         </ListItemIcon>
@@ -43,7 +45,7 @@ export default function MainListItems(){
       <ListSubheader>Ressources Management</ListSubheader>
       
     
-      <ListItem button>
+      <ListItem button component={Link} to="/Users">
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>
@@ -52,7 +54,7 @@ export default function MainListItems(){
   
 
       
-      <ListItem button>
+      <ListItem button component={Link} to="/Application">
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>
@@ -61,7 +63,7 @@ export default function MainListItems(){
     
 
 
-         <ListItem button>
+         <ListItem button component={Link} to="/Firewall">
          <ListItemIcon>
            <AssignmentIcon />
          </ListItemIcon>
@@ -70,7 +72,7 @@ export default function MainListItems(){
       
 
       
-      <ListItem button>
+      <ListItem button component={Link} to="/Bluetooth_agent">
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>
