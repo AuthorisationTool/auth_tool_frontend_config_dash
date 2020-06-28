@@ -8,7 +8,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 import axios from 'axios';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import BorderColorIcon from '@material-ui/icons/BorderColor';
 import IconButton from '@material-ui/core/IconButton';
 import {deleteRole} from './services/RoleService';
 import Button from '@material-ui/core/Button';
@@ -41,11 +40,6 @@ useEffect(() => {
   },50);
  }
 
- 
-
- function handleUpdateRole(id){
-console.log(`update clicked on row with id ${id}`);
- }
 
 
   /*function Roles(){
