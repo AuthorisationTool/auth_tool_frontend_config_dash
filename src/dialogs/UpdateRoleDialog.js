@@ -11,8 +11,10 @@ import { FormControl } from '@material-ui/core';
 import FormLabel from '@material-ui/core/FormLabel'
 import FormHelperText from '@material-ui/core/FormHelperText'
 import {createRole} from '../services/RoleService'
+import BorderColorIcon from '@material-ui/icons/BorderColor';
+import IconButton from '@material-ui/core/IconButton';
 
-export default class AddRoleDialog extends Component{
+export default class UpdateRoleDialog extends Component{
 state = {
     open: false,
     roleForm: {
@@ -54,15 +56,15 @@ render(){
     
 
     return(
-        <div align="right" right="100px">
-        <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
-          + add new Role
-        </Button>
+        <>
+        <IconButton onClick={this.handleClickOpen}>
+                              <BorderColorIcon color="primary"/>
+                            </IconButton>
         <Dialog open={open} onClose={this.handleClickOpen} aria-labelledby="form-dialog-title">
           <DialogTitle id="form-dialog-title">Add a new Role</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Fill this form below and click on 'SAVE' to create the Role 
+              Fill this form and click on 'APPLY' to save changes 
             </DialogContentText>
             <FormControl style={{top: 11,}}>
             <FormLabel>Name of role</FormLabel>
@@ -111,11 +113,11 @@ render(){
               Cancel
             </Button>
             <Button onClick={(event) => this.handleSave(rolename,argument)} color="primary" variant="contained">
-              Save
+              Apply
             </Button>
           </DialogActions>
         </Dialog>
-      </div>
+      </>
     );
 }    
 }

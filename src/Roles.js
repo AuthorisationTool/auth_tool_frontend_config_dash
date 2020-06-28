@@ -13,12 +13,13 @@ import IconButton from '@material-ui/core/IconButton';
 import {deleteRole} from './services/RoleService';
 import Button from '@material-ui/core/Button';
 import AddRoleDialog from './dialogs/AddRoleDialog';
+import UpdateRoleDialog from './dialogs/UpdateRoleDialog';
 
 const Roles = () => {
 const [roleList, setroleList] = useState([]);
 const [reupload, setreupload] = useState(false);
 const fetchRoleList =  () => {
-  axios.get('http://localhost:8080/policy/role').then(res => {
+  axios.get('http://192.168.1.104:8080/policy/role').then(res => {
   console.log(res);
   setroleList(res.data)});
 }
@@ -85,9 +86,7 @@ console.log(`update clicked on row with id ${id}`);
                             <IconButton onClick={ event => {handleDelete(role.roleId);}}>
                                 <DeleteForeverIcon color="primary" />
                             </IconButton>
-                            <IconButton onClick={(event) => handleUpdateRole(role.roleId)}>
-                              <BorderColorIcon color="primary"/>
-                            </IconButton>
+                            <UpdateRoleDialog roleId={role.roleid} rolename={role.roleName} argument={role.rscl.classification_arg}/>
                             </TableCell>
                           </TableRow></>);
                })
