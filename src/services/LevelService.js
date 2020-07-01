@@ -12,12 +12,12 @@ const deleteLevel = (roleId,levelId) => {
     http.delete(`/role/${roleId}/level/${levelId}`);
 }
 
-const getLevelsAll = roleId => {
-    http.get(`/role/${roleId}/level`);
-}
 
 const getLevel = (roleId,levelId) => {
-    http.get(`/role/${roleId}/level/${levelId}`);
+    
+    http.get(`/role/${roleId}/level/${levelId}`).then( res => {
+
+    })
 }
 
 export default {

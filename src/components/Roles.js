@@ -13,6 +13,7 @@ import {deleteRole} from '../services/RoleService';
 import Button from '@material-ui/core/Button';
 import AddRoleDialog from '../dialogs/AddRoleDialog';
 import UpdateRoleDialog from '../dialogs/UpdateRoleDialog';
+import { Link } from 'react-router-dom';
 
 const Roles = () => {
 const [roleList, setroleList] = useState([]);
@@ -39,7 +40,9 @@ useEffect(() => {
     setreupload(true);
   },50);
  }
+    const handleManageLevels = (roleid) => {
 
+    }
 
 
   /*function Roles(){
@@ -74,7 +77,14 @@ useEffect(() => {
                             <TableCell>{role.rscl.classification}</TableCell>
                             <TableCell>{role.rscl.classification_arg}</TableCell>
                             <TableCell>
-                            <Button variant="outlined" color="primary">
+                            <Button variant="outlined"
+                             color="primary"
+                             component={Link} to={{
+                               pathname: "/Levels",
+                               state : {
+                                 roleid: `${role.roleId}`
+                               }
+                             }} >
                               Manage Levels
                             </Button>
                             <IconButton onClick={ event => {handleDelete(role.roleId);}}>

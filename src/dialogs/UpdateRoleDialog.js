@@ -10,7 +10,7 @@ import Select from '@material-ui/core/Select'
 import { FormControl } from '@material-ui/core';
 import FormLabel from '@material-ui/core/FormLabel'
 import FormHelperText from '@material-ui/core/FormHelperText'
-import {createRole} from '../services/RoleService'
+import {createRole, updateRole} from '../services/RoleService'
 import BorderColorIcon from '@material-ui/icons/BorderColor';
 import IconButton from '@material-ui/core/IconButton';
 

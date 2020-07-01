@@ -19,6 +19,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MainListItems from './listItems';
 import Roles from './Roles';
 import { Route, Switch, BrowserRouter} from 'react-router-dom';
+import LevelsManager from './LevelsManager';
 
 
 function Copyright() {
@@ -177,8 +178,7 @@ export default function Dashboard() {
                
               <Switch>
                 <Route exact path="/Roles" component={Roles} render={(props) => (<><Roles/></>)}/>
-                <Route exact path="/Levels" component={Roles} render={(props) => (<><Roles/></>)}/>
-                <Route exact path="/Constraints" component={Roles} render={(props) => (<><Roles/></>)}/>
+                <Route exact path="/Levels" component={LevelsManager} render={(props) => (<><LevelsManager roleid={props.location.state.roleid}/></>)}/>
                 <Route exact path="/Users" component={Roles} render={(props) => (<><Roles/></>)}/>
                 <Route exact path="/Application" component={Roles} render={(props) => (<><Roles/></>)}/>
                 <Route exact path="/Firewall" component={Roles} render={(props) => (<><Roles/></>)}/>

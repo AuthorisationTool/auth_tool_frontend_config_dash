@@ -27,7 +27,7 @@ state = {
 }
 
 clickMe = () => {
-  this.props.clickMe()
+  this.props.clickMe();
 }
 
 handleSave = (rolename,argument) => {

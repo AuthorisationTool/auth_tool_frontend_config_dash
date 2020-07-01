@@ -30,12 +30,7 @@ export default function MainListItems(){
         <ListItemText primary="Levels" />
       </ListItem>
 
-      <ListItem button component={Link} to="/Constraints">
-        <ListItemIcon>
-          <PeopleIcon />
-        </ListItemIcon>
-        <ListItemText primary="Constraints" />
-      </ListItem>
+
     </div>
     
   );
