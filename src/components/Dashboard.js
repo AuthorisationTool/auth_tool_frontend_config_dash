@@ -52,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
     ...theme.mixins.toolbar,
   },
   appBar: {
+    backgroundColor: 'black',
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -174,7 +175,7 @@ export default function Dashboard() {
            
             {/* Roles */}
             <Grid item xs={12}>
-              <Paper className={classes.paper}>
+            
                
               <Switch>
                 <Route exact path="/Roles" component={Roles} render={(props) => (<><Roles/></>)}/>
@@ -185,7 +186,7 @@ export default function Dashboard() {
                 <Route exact path="/Bluetooth_agent" component={Roles} render={(props) => (<><Roles/></>)}/>
               </Switch>
                 
-              </Paper>
+          
             </Grid>
             
           </Grid>

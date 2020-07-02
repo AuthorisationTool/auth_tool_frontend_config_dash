@@ -1,11 +1,33 @@
 import React from 'react'
-import {Card} from 'react-bootstrap'
-import {Button} from '@material-ui/core'
+
+import {Grid, Card, Button, CardHeader, makeStyles, Typography, Divider, CardContent, CardActions, ButtonGroup} from '@material-ui/core'
 /*
 props include [ props.roleid / props.levelid / props.id / props.type /
      props.name / props.arg / props.permission_or_action ] 
 */
+
+
 export default function Constraint(props) {
+
+    const useStyles = makeStyles((theme) => ({
+        root: {
+          flexGrow: 1,
+        },
+        cardHeader: {
+          backgroundColor:
+       theme.palette.grey[300],
+        },
+        control: {
+          padding: theme.spacing(2),
+        },
+
+        card: {
+          backgroundColor: theme.palette.grey[50],
+          margin: theme.spacing(1),
+        }
+      }));
+      
+
     const handleUpdateConstraint = () => {
         console.log("update constraint clicked");
     }
@@ -13,27 +35,39 @@ export default function Constraint(props) {
     const handleDeleteConstraint = () => {
         console.log("update constraint clicked");
     }
- 
+    const classes = useStyles();
     return (
-        <>
-            <Card style={{ width: '18rem' }}>
-  <Card.Body>
-    <Card.Title>{props.type}</Card.Title>
-    <Card.Subtitle className="mb-2 text-muted">constraint ID:{props.id}</Card.Subtitle>
-    <Card.Text>
-        <b>{props.name}:</b> {props.arg}
-        <br/>
-        <b>Permission /Action :</b> {props.permission_or_action} 
-    </Card.Text>
-    <Button color="primary"
-    onCLick={(event) =>
-     handleUpdateConstraint(props.roleid,props.levelid,props.id)}>
-         Update</Button>
-    <Button color="secondary"
-    onClick={(event) => handleDeleteConstraint(props.roleid,props.levelid,props.id)}
-    >Delete</Button>
-  </Card.Body>
-</Card>
-        </>
+        
+      <Grid containder item xs={3} spacing={1}>
+       
+        <Card variant="outlined" className={classes.card}>
+          <CardHeader
+          title={props.type}
+          subheader={`Constraint ID: ${props.id}`}
+          titleTypographyProps={{ align: 'center' }}
+          subheaderTypographyProps={{ align: 'center' }}
+  
+          className={classes.cardHeader}
+          />
+        <CardContent>
+      <Typography variant="body">
+      <ul>
+        <li><strong>Type :</strong>{props.type}</li>
+        <li><strong>{props.name} :</strong>{props.arg}</li>
+        <li><strong>Permission : </strong>{props.permission}</li>
+        <li><strong>Action : </strong>{props.action}</li>
+      </ul>
+      </Typography>
+    </CardContent>
+    <Divider fullWidth/>
+    <CardActions>
+   
+        <Button fullWidth size="small" variant="contained" color="primary">Delete</Button>
+        <Button fullWidth size="small" variant="outlined" color="primary">Update</Button>
+  
+    </CardActions>
+        </Card>  
+    
+       </Grid>
     )
 }

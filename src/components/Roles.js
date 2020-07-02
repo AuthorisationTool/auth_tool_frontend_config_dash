@@ -5,9 +5,10 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import {Paper, makeStyles} from '@material-ui/core'
 import Title from './Title';
 import axios from 'axios';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import DeleteForeverTwoToneIcon from '@material-ui/icons/DeleteForeverTwoTone';
 import IconButton from '@material-ui/core/IconButton';
 import {deleteRole} from '../services/RoleService';
 import Button from '@material-ui/core/Button';
@@ -15,7 +16,21 @@ import AddRoleDialog from '../dialogs/AddRoleDialog';
 import UpdateRoleDialog from '../dialogs/UpdateRoleDialog';
 import { Link } from 'react-router-dom';
 
+
 const Roles = () => {
+
+const useStyles =  makeStyles((theme) => ({
+  paper: {
+    padding: theme.spacing(2),
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'column',
+  },
+
+  tableHead: {
+    backgrounColor: theme.palette.grey[300],
+  }
+}));
 const [roleList, setroleList] = useState([]);
 const [reupload, setreupload] = useState(false);
 const fetchRoleList =  () => {
@@ -49,16 +64,16 @@ useEffect(() => {
     function handleAddRole() {
       console.log("add clicked !")
      }*/
-     
+     const classes = useStyles();
      return (  
-    <React.Fragment>
+    <Paper elevation={3} className={classes.paper}>
       <Title>Roles (Mapped with metadata: classification and argument)</Title>
   
        <AddRoleDialog clickMe={() => setreupload(true)}/>
         
       <Table size="small">
-        <TableHead>
-          <TableRow>
+        <TableHead className={classes.tableHead}>
+          <TableRow className={classes.tableHead}>
             
             <TableCell>(Identifier)</TableCell>
             <TableCell>(Name)</TableCell>
@@ -79,6 +94,7 @@ useEffect(() => {
                             <TableCell>
                             <Button variant="outlined"
                              color="primary"
+                             size="small"
                              component={Link} to={{
                                pathname: "/Levels",
                                state : {
@@ -87,10 +103,11 @@ useEffect(() => {
                              }} >
                               Manage Levels
                             </Button>
-                            <IconButton onClick={ event => {handleDelete(role.roleId);}}>
-                                <DeleteForeverIcon color="primary" />
-                            </IconButton>
                             <UpdateRoleDialog roleId={role.roleid} rolename={role.roleName} argument={role.rscl.classification_arg}/>
+                            <IconButton onClick={ event => {handleDelete(role.roleId);}}>
+                                <DeleteForeverTwoToneIcon />
+                            </IconButton>
+                            
                             </TableCell>
                           </TableRow></>);
                })
@@ -98,7 +115,7 @@ useEffect(() => {
         </TableBody>
       </Table>
       
-    </React.Fragment>
+    </Paper>
   );
 }
 export default Roles;

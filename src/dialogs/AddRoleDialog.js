@@ -55,7 +55,7 @@ render(){
 
     return(
         <div align="right" right="100px">
-        <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
+        <Button variant="contained" size="small" color="primary" onClick={this.handleClickOpen}>
           + add new Role
         </Button>
         <Dialog open={open} onClose={this.handleClickOpen} aria-labelledby="form-dialog-title">

@@ -8,9 +8,9 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Select from '@material-ui/core/Select'
 import { FormControl } from '@material-ui/core';
-import FormLabel from '@material-ui/core/FormLabel'
-import FormHelperText from '@material-ui/core/FormHelperText'
-import {createRole, updateRole} from '../services/RoleService'
+import FormLabel from '@material-ui/core/FormLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import {createRole, updateRole} from '../services/RoleService';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
 import IconButton from '@material-ui/core/IconButton';
 
@@ -58,10 +58,10 @@ render(){
     return(
         <>
         <IconButton onClick={this.handleClickOpen}>
-                              <BorderColorIcon color="primary"/>
+                              <BorderColorIcon/>
                             </IconButton>
         <Dialog open={open} onClose={this.handleClickOpen} aria-labelledby="form-dialog-title">
-          <DialogTitle id="form-dialog-title">Add a new Role</DialogTitle>
+          <DialogTitle id="form-dialog-title">Update the selected Role</DialogTitle>
           <DialogContent>
             <DialogContentText>
               Fill this form and click on 'APPLY' to save changes 

@@ -26,10 +26,10 @@ export default function LevelsManager(props) {
         
         <>
             {levels.map(level => {
-                return (<Level 
+                return (<div><Level 
                 roleid={props.location.state.roleid}
                 levelid={level.id}
-                model={level.acm.modelName}/>);
+                model={level.acm.modelName}/></div>);
             })
             }
         </>
