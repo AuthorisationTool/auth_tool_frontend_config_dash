@@ -23,7 +23,12 @@ export default function MainListItems(){
         <ListItemText primary="Roles" />
       </ListItem>
 
-      <ListItem button component={Link} to="/Levels"> 
+      <ListItem button component={Link} to={{
+                               pathname: "/Levels",
+                               state : {
+                                 roleid: `no_selected_role`
+                               }
+                             }}> 
         <ListItemIcon>
           <ShoppingCartIcon />
         </ListItemIcon>
