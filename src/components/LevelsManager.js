@@ -25,18 +25,12 @@ export default function LevelsManager(props) {
         }
     }));
 
-
-    useEffect(() => {
-        setroleid(props.location.state.roleid);
-        if(!roleid == "no_selected_role"){
-            setrerender(true);}
-            }
-    , []);
-
+    
     useEffect(() => {
         fetchRoleList();
         if(!roleid == "no_selected_role"){
-    setrerender(true);}
+            fetchLevelsList();
+}
     }, [roleid]);
 
     useEffect(() => {
@@ -54,6 +48,8 @@ export default function LevelsManager(props) {
     const handleSeeLevelsClick = () => {
         setrerender(true);
     }
+
+    const handleOutsideRendering = () => {setrerender(true)}
     
     const fetchRoleList = () => {
         axios.get(`http://localhost:8080/policy/role`).then(res => {
@@ -85,14 +81,17 @@ export default function LevelsManager(props) {
         </Select>
       </FormControl>
       <FormControl className={classes.formcontrol} ><Button color="primary" onClick={handleSeeLevelsClick}>Show levels</Button></FormControl>
-      <FormControl className={classes.formcontrol} > <AddLevelDialog roleid={roleid}/></FormControl>
+      <FormControl className={classes.formcontrol} > <AddLevelDialog clickme={handleOutsideRendering} roleid={roleid}/></FormControl>
         </Paper>
             
-            {levels.map((level) => {
+            {
+                
+            levels.map((level) => {
                 return (<><Level 
                 roleid={roleid}
                 levelid={level.id}
-                model={level.acm.modelName}/></>);
+                model={level.acm.modelName}
+                clickMe={()=>setrerender(true)}/></>);
             })}
             
             

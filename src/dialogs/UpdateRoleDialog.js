@@ -58,7 +58,7 @@ render(){
     return(
         <>
         <IconButton onClick={this.handleClickOpen}>
-                              <BorderColorIcon/>
+                              <BorderColorIcon color="primary"/>
                             </IconButton>
         <Dialog open={open} onClose={this.handleClickOpen} aria-labelledby="form-dialog-title">
           <DialogTitle id="form-dialog-title">Update the selected Role</DialogTitle>

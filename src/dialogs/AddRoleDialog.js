@@ -50,11 +50,11 @@ handleChange = name => ({target: {value} }) => {
 
 render(){
 
-    const {open, roleForm: {rolename,argument}} = this.state
+    const {open, roleForm: {rolename,argument}} = this.state;
     
 
     return(
-        <div align="right" right="100px">
+        <div align="right" style={{margin: 10,}}>
         <Button variant="contained" size="small" color="primary" onClick={this.handleClickOpen}>
           + add new Role
         </Button>
@@ -80,7 +80,7 @@ render(){
            </FormControl>
            <FormControl >
            <FormLabel>Metadata classification</FormLabel>
-        <Select native required="true" value={this.props.argument} onChange={this.handleChange("argument")} label="Metadata classification" id="grouped-native-select">
+        <Select native value={this.props.argument} onChange={this.handleChange("argument")} label="Metadata classification" id="grouped-native-select">
           <option aria-label="None" value="Metadata classification" />
           <optgroup label="Type">
             <option value="web_application">Web application</option>

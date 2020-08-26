@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Constraint from './Constraint';
 import {Box, Button, Paper,Typography, Grid, makeStyles, ButtonGroup} from '@material-ui/core';
 import Axios from 'axios';
-import { blue } from '@material-ui/core/colors';
+import {deleteLevel} from '../services/LevelService'
 {/*
     props include : [ props.roledid, props.levelid , props.model]
 */}
@@ -35,21 +35,35 @@ export default function Level(props) {
       }));
 
     const [constraintList, setconstraintList] = useState([]);
-   // const [reupload, setreupload] = useState(false);
+   const [reupload, setreupload] = useState(false);
 
     const fetchConstraintList =  () => {
       Axios.get(`http://localhost:8080/policy/role/${props.roleid}/level/${props.levelid}/constraint`).then( res =>
       setconstraintList(res.data));
     } 
     
-  /*  useEffect(() => {
+    useEffect(() => {
+      if(reupload){
         fetchConstraintList();
-    },[reupload]); */
+      }
+      return (()=>{
+        setreupload(false);
+      });
+    },[reupload]);
+
+    const renderParent = () => {
+      props.clickMe();
+    }
 
     useEffect(() => {
         fetchConstraintList();
     }, []);
 
+    const handleDeleteLevel = () => {
+      deleteLevel(props.roleid,props.levelid);
+      renderParent();
+    }
+    
 
     const classes = useStyles();
 
@@ -76,9 +90,13 @@ export default function Level(props) {
           </Grid>
           <Grid item xs={2} className={classes.levelcompobtn}>
             <ButtonGroup orientation='vertical'>
-            <Button variant="outlined" color="primary" size="small">add Constraint</Button>
-            <Button variant="contained" color="primary" size="small">delete Level</Button>
-            </ButtonGroup></Grid>
+            {/* <ConstraintDialog 
+             roleid={props.roleid}
+             levelid={props.levelid}/>*/}
+             <Button variant='contained' size='small' color='primary' onClick={handleDeleteLevel}>delete level</Button>
+             </ButtonGroup>
+            
+            </Grid>
             
           </Grid>
           </Box>
@@ -88,7 +106,8 @@ export default function Level(props) {
                      id={constraint.constraintID}
                      type={constraint.constraintTypeName}
                      name={constraint.constraintTypeSpecificName}
-                     arg={constraint.constraintArg}/>)
+                     arg={constraint.constraintArg}
+                     clickMe={()=>setreupload(true)}/>)
             })}
         </Grid>
         </Paper>

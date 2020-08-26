@@ -5,7 +5,7 @@ import { Button, Dialog, DialogTitle,
 import {createLevel} from '../services/LevelService';
 import axios from 'axios';
 
-export default  function AddLevelDialog({roleid}) {
+export default  function AddLevelDialog({roleid,clickme}) {
 
 const [model, setmodel] = useState("");
 const [open, setopen] = useState(false);
@@ -29,8 +29,8 @@ const handleSave = () => {
     console.log(res);
     createLevel(roleid,1+res.data,model);
   });
-
-    
+  clickme();
+  setopen(!open);
 }
 
 

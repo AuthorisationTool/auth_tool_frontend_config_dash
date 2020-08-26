@@ -1,5 +1,5 @@
 import React from 'react'
-
+import {deleteConstraint} from '../services/ConstraintService';
 import {Grid, Card, Button, CardHeader, makeStyles, Typography, Divider, CardContent, CardActions, ButtonGroup} from '@material-ui/core'
 /*
 props include [ props.roleid / props.levelid / props.id / props.type /
@@ -31,9 +31,11 @@ export default function Constraint(props) {
     const handleUpdateConstraint = () => {
         console.log("update constraint clicked");
     }
-
+    const renderParent = () => {props.clickMe()}
+    
     const handleDeleteConstraint = () => {
-        console.log("update constraint clicked");
+        deleteConstraint(props.roleid,props.levelid,props.id);
+        renderParent();
     }
     const classes = useStyles();
     return (
@@ -59,10 +61,11 @@ export default function Constraint(props) {
       </ul>
       </Typography>
     </CardContent>
-    <Divider fullWidth/>
+    <Divider/>
     <CardActions>
    
-        <Button fullWidth size="small" variant="contained" color="primary">Delete</Button>
+        <Button fullWidth size="small" variant="contained" color="primary"
+        onClick={handleDeleteConstraint}>Delete</Button>
         <Button fullWidth size="small" variant="outlined" color="primary">Update</Button>
   
     </CardActions>
