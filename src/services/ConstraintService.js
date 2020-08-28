@@ -17,3 +17,4 @@ export async function createConstraint(roleid,levelid,constraint){
 export async function deleteConstraint(roleid,levelid,id){
     await http.delete(`/role/${roleid}/level/${levelid}/constraint/${id}`);
 }
+

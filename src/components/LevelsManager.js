@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from 'react'
 import Level from '../components/Level';
 import axios from 'axios';
-import { Paper, FormControl, InputLabel, Select, Button, makeStyles, Typography } from '@material-ui/core'
+import { Paper, FormControl, InputLabel, Select, Button, makeStyles } from '@material-ui/core'
 import AddLevelDialog from '../dialogs/AddLevelDialog';
 
 export default function LevelsManager(props) {
@@ -28,7 +28,7 @@ export default function LevelsManager(props) {
     
     useEffect(() => {
         fetchRoleList();
-        if(!roleid == "no_selected_role"){
+        if(!roleid === "no_selected_role"){
             fetchLevelsList();
 }
     }, [roleid]);

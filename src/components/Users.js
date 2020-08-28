@@ -1,5 +1,4 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -10,8 +9,10 @@ import Title from './Title';
 import axios from 'axios';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import IconButton from '@material-ui/core/IconButton';
+import { useState, useEffect } from 'react';
+import AddUserDialog from '../dialogs/AddUserDialog';
+import Button from '@material-ui/core/Button';
 import {deleteUser} from '../services/UserService';
-
 
 const Users = () => {
 
@@ -44,7 +45,7 @@ const StyledTableRow = withStyles((theme) => ({
 const [userList, setuserList] = useState([]);
 const [reupload, setreupload] = useState(false);
 const fetchUserList =  () => {
-  axios.get('http://192.168.1.104:8080/users').then(res => {
+  axios.get('http://127.0.0.1:8080/users').then(res => {
   console.log(res);
   setuserList(res.data)});
 }
@@ -65,6 +66,7 @@ useEffect(() => {
     setreupload(true);
   },50);
  }
+
 
   /*function Roles(){
     function handleAddRole() {
@@ -98,10 +100,10 @@ useEffect(() => {
                             <StyledTableCell>{user.name}</StyledTableCell>
                             <StyledTableCell>{user.confidence}</StyledTableCell>
                             <StyledTableCell>{user.mobility}</StyledTableCell>
-                            <StyledTableCell>{user.memberof}</StyledTableCell>
+                            <StyledTableCell>{user.memberOf}</StyledTableCell>
 
                             <StyledTableCell>
-                            <IconButton onClick={ event => {handleDelete(user.userID);}}>
+                            <IconButton onClick={handleDelete(user.userID)}>
                                 <DeleteForeverIcon color="primary" />
                             </IconButton>
                             </StyledTableCell>
@@ -115,4 +117,4 @@ useEffect(() => {
     </Paper>
   );
 }
-export default Roles;
+export default Users;

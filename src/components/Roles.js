@@ -48,7 +48,7 @@ const StyledTableRow = withStyles((theme) => ({
 const [roleList, setroleList] = useState([]);
 const [reupload, setreupload] = useState(false);
 const fetchRoleList =  () => {
-  axios.get('http://192.168.1.104:8080/policy/role').then(res => {
+  axios.get('http://127.0.0.1:8080/policy/role').then(res => {
   console.log(res);
   setroleList(res.data)});
 }

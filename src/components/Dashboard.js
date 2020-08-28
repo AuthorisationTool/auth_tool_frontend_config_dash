@@ -11,7 +11,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -20,7 +19,8 @@ import MainListItems from './listItems';
 import Roles from './Roles';
 import { Route, Switch, BrowserRouter} from 'react-router-dom';
 import LevelsManager from './LevelsManager';
-
+import Users from './Users';
+import Badges from './Badges'
 
 function Copyright() {
   return (
@@ -180,10 +180,10 @@ export default function Dashboard() {
               <Switch>
                 <Route exact path="/Roles" component={Roles} render={(props) => (<><Roles/></>)}/>
                 <Route exact path="/Levels" component={LevelsManager} render={(props) => (<><LevelsManager roleid={props.location.state.roleid}/></>)}/>
-                <Route exact path="/Users" component={Roles} render={(props) => (<><Roles/></>)}/>
+                <Route exact path="/Users" component={Users} render={(props) => (<><Users/></>)}/>
                 <Route exact path="/Application" component={Roles} render={(props) => (<><Roles/></>)}/>
                 <Route exact path="/Firewall" component={Roles} render={(props) => (<><Roles/></>)}/>
-                <Route exact path="/Bluetooth_agent" component={Roles} render={(props) => (<><Roles/></>)}/>
+                <Route exact path="/Bluetooth_agent" component={Badges} render={(props) => (<><Badges/></>)}/>
               </Switch>
                 
           
