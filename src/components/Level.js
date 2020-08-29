@@ -1,10 +1,10 @@
 import React from 'react'
-import {CardDeck} from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import Constraint from './Constraint';
 import {Box, Button, Paper,Typography, Grid, makeStyles, ButtonGroup} from '@material-ui/core';
 import Axios from 'axios';
 import {deleteLevel} from '../services/LevelService'
+import AddProfileConstraintDialog from '../dialogs/AddProfileConstraintDialog';
 {/*
     props include : [ props.roledid, props.levelid , props.model]
 */}
@@ -90,9 +90,13 @@ export default function Level(props) {
           </Grid>
           <Grid item xs={2} className={classes.levelcompobtn}>
             <ButtonGroup orientation='vertical'>
-            {/* <ConstraintDialog 
-             roleid={props.roleid}
-             levelid={props.levelid}/>*/}
+            {(props.model == "ProfileBasedAccessControl" && <>
+            <AddProfileConstraintDialog roleid={props.roleid} levelid={props.levelid}/>
+            </>)
+            ||
+            (props.model === "ContextBasedAccessControl" && <>
+            <AddProfileConstraintDialog roleid={props.id} levelid={props.levelid}/>
+            </>)}
              <Button variant='contained' size='small' color='primary' onClick={handleDeleteLevel}>delete level</Button>
              </ButtonGroup>
             
