@@ -67,7 +67,7 @@ export default function Badges() {
                 />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="h2">
-                    Bluetooth Badge
+                    Bluetooth Badge Agent
                   </Typography>
                   <Typography
                     variant="body2"
