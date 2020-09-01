@@ -7,11 +7,11 @@ import {
   FormControl,
   FormLabel,
 } from "@material-ui/core";
-import {createConstraint} from '../services/ConstraintService';
+import { createConstraint } from "../services/ConstraintService";
 
 export default function AddProfileConstraintDialog({ roleid, levelid }) {
   const [open, setopen] = useState(false);
-  const action = [
+  const actions = [
     {
       name: "read",
       value: "r",
@@ -40,7 +40,6 @@ export default function AddProfileConstraintDialog({ roleid, levelid }) {
   };
 
   const [confidence, setconfidence] = useState("");
-  const getConstraintNum = () => {};
   const [constraint, setconstraint] = useState({
     id: "",
     permission_or_action: "",
@@ -53,7 +52,7 @@ export default function AddProfileConstraintDialog({ roleid, levelid }) {
   const [mobility, setmobility] = useState("");
   const [type, settype] = useState("Mobility");
   const [openMob, setopenMob] = useState(false);
-  const [confidencerange, setconfidencerange] = useState([50,75]);
+  const [confidencerange, setconfidencerange] = useState([50, 75]);
   const handleTypeChange = (event) => {
     settype(event.target.value);
   };
@@ -77,16 +76,17 @@ export default function AddProfileConstraintDialog({ roleid, levelid }) {
   const handleChangeConfidence = (event) => {
     setconfidencerange(event.target.value);
     setconfidence(textvalue(confidencerange));
-  }
+  };
 
   const textvalue = (value) => {
-      return `${value[0]} ${value[1]}`
-  }
+    return `${value[0]} ${value[1]}`;
+  };
   const handleSaveConstraint = () => {
     switch (type) {
       case "Mobility":
         setconstraint({
           ...constraint,
+          id: `${getConstraintNumber(roleid, levelid) + 1}`,
           permission_or_action: permission,
           specific_type: type,
           arg: mobility,
@@ -94,17 +94,19 @@ export default function AddProfileConstraintDialog({ roleid, levelid }) {
       case "Confidence":
         setconstraint({
           ...constraint,
+          id: `${getConstraintNum(roleid, levelid) + 1}`,
           permission_or_action: permission,
           specific_type: "Confidence",
           arg: confidence,
         });
+        handleClickOpen();
     }
-    createConstraint(roleid,levelid,constraint);
+    createConstraint(roleid, levelid, constraint);
   };
 
   const handleChangePermission = (event) => {
     setpermission(event.target.value);
-  }
+  };
 
   return (
     <div>
@@ -122,9 +124,9 @@ export default function AddProfileConstraintDialog({ roleid, levelid }) {
               </FormLabel>
               <RadioGroup
                 aria-label="gender"
-                name="gender1"
-                value={value}
-                onChange={(event) => handleTypeChange(event)}
+                name="constraintType"
+                value={type}
+                onChange={handleTypeChange}
               >
                 <FormControlLabel
                   value="Mobility"
@@ -155,8 +157,7 @@ export default function AddProfileConstraintDialog({ roleid, levelid }) {
                     value={mobility}
                     onChange={handleChangeMob}
                   >
-                    <MenuItem value="">
-                    </MenuItem>
+                    <MenuItem value=""></MenuItem>
                     <MenuItem value="home">Home</MenuItem>
                     <MenuItem value="abroad">Abroad</MenuItem>
                   </Select>
@@ -204,28 +205,32 @@ export default function AddProfileConstraintDialog({ roleid, levelid }) {
           <div>
             <FormControl>
               <FormLabel>{permission_or_action}</FormLabel>
-              
-                 { (permission_or_action === "permission" && 
-                    <><Select onChange={handleChangePermission}>
+
+              {
+                (permission_or_action === "permission" && (
+                  <>
+                    <Select onChange={handleChangePermission}>
                       {permissions.map((p) => (
-                        <option value={p.name}>{p.name}</option>))}
-                        </Select>
-                    </>)
-                   ||
-                    (permission_or_action === "action" && (
-                      <><Select onChange={handleChangeAction}>
-                      {actions.map((a) => (
-                        <option value={a.value}>{a.name}</option>))}
-                        </Select>
+                        <option value={p.name}>{p.name}</option>
+                      ))}
+                    </Select>
+                  </>
+                )) ||
+                  (permission_or_action === "action" && (
+                    <>
+                      <Select onChange={handleChangeAction}>
+                        {actions.map((a) => (
+                          <option value={a.value}>{a.name}</option>
+                        ))}
+                      </Select>
                     </>
-                    ))
-                  // Or use instead:
-                  // {
-                  // 'permission':<>{permission.map(p => <option value={p.value}>{p.name}</option>)}</>,
-                  // 'action': <>{action.map(a => <option value={a.value}>{a.name}</option>)}</>
-                  // }[permission_or_action]
-                }
-              
+                  ))
+                // Or use instead:
+                // {
+                // 'permission':<>{permission.map(p => <option value={p.value}>{p.name}</option>)}</>,
+                // 'action': <>{action.map(a => <option value={a.value}>{a.name}</option>)}</>
+                // }[permission_or_action]
+              }
             </FormControl>
           </div>
         </DialogContent>
