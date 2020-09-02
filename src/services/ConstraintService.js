@@ -17,7 +17,7 @@ export async function createConstraint(roleid,levelid,constraint){
 export function getConstraintNumber(roleid,levelid){
     let count = 0;
     http.get(`/role/${roleid}/level/${levelid}/NumConstraint`).then(res => {
-        number = res.data;
+        count = res.data;
     })
     return count;
 }

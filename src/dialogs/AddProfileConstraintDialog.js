@@ -7,7 +7,21 @@ import {
   FormControl,
   FormLabel,
 } from "@material-ui/core";
-import { createConstraint } from "../services/ConstraintService";
+import { createConstraint, getConstraintNumber } from "../services/ConstraintService";
+import {useState } from 'react';
+import Button from '@material-ui/core/Button';
+import Radio from '@material-ui/core/Radio';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import InputLabel from '@material-ui/core/InputLabel';
+import Slider from '@material-ui/core/Slider';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import Typography from '@material-ui/core/Typography';
+import DialogActions from '@material-ui/core/DialogActions';
+
+
+
 
 export default function AddProfileConstraintDialog({ roleid, levelid }) {
   const [open, setopen] = useState(false);
@@ -67,9 +81,7 @@ export default function AddProfileConstraintDialog({ roleid, levelid }) {
   const handleChangeMob = (event) => {
     setmobility(event.target.value);
   };
-  const handleTypeChange = (event) => {
-    settype(event.target.value);
-  };
+  
   const handleAuthorizationChange = (event) => {
     setp_or_a(event.target.value);
   };
@@ -94,7 +106,7 @@ export default function AddProfileConstraintDialog({ roleid, levelid }) {
       case "Confidence":
         setconstraint({
           ...constraint,
-          id: `${getConstraintNum(roleid, levelid) + 1}`,
+          id: `${getConstraintNumber(roleid, levelid) + 1}`,
           permission_or_action: permission,
           specific_type: "Confidence",
           arg: confidence,
@@ -107,6 +119,8 @@ export default function AddProfileConstraintDialog({ roleid, levelid }) {
   const handleChangePermission = (event) => {
     setpermission(event.target.value);
   };
+
+  const handleChangeAction = () => {}
 
   return (
     <div>
@@ -144,7 +158,7 @@ export default function AddProfileConstraintDialog({ roleid, levelid }) {
           <div>
             {(type === "Mobility" && (
               <>
-                <FormControl className={classes.formControl}>
+                <FormControl>
                   <InputLabel id="demo-controlled-open-select-label">
                     Age
                   </InputLabel>
@@ -174,7 +188,6 @@ export default function AddProfileConstraintDialog({ roleid, levelid }) {
                     onChange={handleChangeConfidence}
                     valueLabelDisplay="auto"
                     aria-labelledby="range-slider"
-                    getAriaValueText={valuetext}
                   />
                 </div>
               ))}
@@ -204,10 +217,10 @@ export default function AddProfileConstraintDialog({ roleid, levelid }) {
           </div>
           <div>
             <FormControl>
-              <FormLabel>{permission_or_action}</FormLabel>
+              <FormLabel>{p_or_a}</FormLabel>
 
               {
-                (permission_or_action === "permission" && (
+                (p_or_a === "Permission" && (
                   <>
                     <Select onChange={handleChangePermission}>
                       {permissions.map((p) => (
@@ -216,7 +229,7 @@ export default function AddProfileConstraintDialog({ roleid, levelid }) {
                     </Select>
                   </>
                 )) ||
-                  (permission_or_action === "action" && (
+                  (p_or_a === "Action" && (
                     <>
                       <Select onChange={handleChangeAction}>
                         {actions.map((a) => (
