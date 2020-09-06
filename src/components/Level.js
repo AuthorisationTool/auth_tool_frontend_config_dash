@@ -50,7 +50,11 @@ export default function Level (props) {
       return (()=>{
         setreupload(false);
       });
-    });
+    },[reupload]);
+
+    useEffect(() => {
+        fetchConstraintList();
+    }, []);
 
     const renderParent = () => {
       props.clickMe();
@@ -108,6 +112,7 @@ export default function Level (props) {
                      id={constraint.constraintID}
                      type={constraint.constraintTypeName}
                      name={constraint.constraintTypeSpecificName}
+                     permission={constraint.permission}
                      arg={constraint.constraintArg}
                      clickMe={()=>setreupload(true)}/>)
             })}

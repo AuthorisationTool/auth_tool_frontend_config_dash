@@ -8,19 +8,17 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import MainListItems from './listItems';
 import Roles from './Roles';
 import { Route, Switch, BrowserRouter} from 'react-router-dom';
 import LevelsManager from './LevelsManager';
 import Users from './Users';
-import Badges from './Badges'
+import Badges from './Badges';
 
 function Copyright() {
   return (
@@ -178,7 +176,7 @@ export default function Dashboard() {
                 <Route exact path="/Users" component={Users} render={(props) => (<><Users/></>)}/>
                 <Route exact path="/Application" component={Roles} render={(props) => (<><Roles/></>)}/>
                 <Route exact path="/Firewall" component={Roles} render={(props) => (<><Roles/></>)}/>
-                <Route exact path="/Bluetooth_Badges" component={Badges} render={(props) => (<><Badges/></>)}/>
+                <Route exact path="/Badges" component={Badges} render={(props) => (<><Badges/></>)}/>
               </Switch>
                 
           

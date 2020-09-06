@@ -216,12 +216,8 @@ export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
                     </Typography>
                     <Slider
                       value={accelerationX}
-                      onChange={(event) => {
-                        setaccelerationvalues({
-                          ...accelerationvalues,
-                          minx: event.tatget.value[0],
-                          maxx: event.target.value[1],
-                        });
+                      onChange={(event, value) => {
+                        setaccelerationX([value[0],value[1]])
                       }}
                       valueLabelDisplay="auto"
                       aria-labelledby="range-slider-acc-x"
@@ -231,12 +227,8 @@ export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
                     </Typography>
                     <Slider
                       value={accelerationY}
-                      onChange={(event) => {
-                        setaccelerationvalues({
-                          ...accelerationvalues,
-                          miny: event.tatget.value[0],
-                          maxy: event.target.value[1],
-                        });
+                      onChange={(event, value) => {
+                          setaccelerationY([value[0],value[1]])
                       }}
                       valueLabelDisplay="auto"
                       aria-labelledby="range-slider-acc-y"
@@ -247,12 +239,8 @@ export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
                     </Typography>
                     <Slider
                       value={accelerationZ}
-                      onChange={(event) => {
-                        setaccelerationvalues({
-                          ...accelerationvalues,
-                          minz: event.tatget.value[0],
-                          maxz: event.target.value[1],
-                        });
+                      onChange={(event, value) => {
+                        setaccelerationZ([value[0],value[1]])
                       }}
                       valueLabelDisplay="auto"
                       aria-labelledby="range-slider-acc-z"
@@ -267,12 +255,8 @@ export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
                     </Typography>
                     <Slider
                       value={gyroX}
-                      onChange={(event) => {
-                        setgyrovalues({
-                          ...gyrovalues,
-                          minx: event.target.value[0],
-                          maxx: event.target.value[1],
-                        });
+                      onChange={(event,value) => {
+                      setgyroX([value[0],value[1]])
                       }}
                       valueLabelDisplay="auto"
                       aria-labelledby="range-slider-gyro-x"
@@ -282,12 +266,8 @@ export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
                     </Typography>
                     <Slider
                       value={gyroY}
-                      onChange={(event) => {
-                        setgyrovalues({
-                          ...gyrovalues,
-                          miny: event.target.value[0],
-                          maxy: event.target.value[1],
-                        });
+                      onChange={(event,value) => {
+                        setgyroY([value[0],value[1]]);
                       }}
                       valueLabelDisplay="auto"
                       aria-labelledby="range-slider-gyro-y"
@@ -297,12 +277,8 @@ export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
                     </Typography>
                     <Slider
                       value={gyroZ}
-                      onChange={(event) => {
-                        setgyrovalues({
-                          ...gyrovalues,
-                          minz: event.target.value[0],
-                          maxz: event.target.value[1],
-                        });
+                      onChange={(event,value) => {
+                        setgyroZ([value[0],value[1]])
                       }}
                       valueLabelDisplay="auto"
                       aria-labelledby="range-slider-gyro-z"

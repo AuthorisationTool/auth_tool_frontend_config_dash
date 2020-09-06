@@ -72,11 +72,11 @@ export default function MainListItems(){
       
 
       
-      <ListItem button component={Link} to="/Bluetooth_agent">
+      <ListItem button component={Link} to="/Badges">
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>
-        <ListItemText primary="Bluetooth Agent" />
+        <ListItemText primary="Badges" />
       </ListItem>
       
 

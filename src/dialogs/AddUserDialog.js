@@ -28,8 +28,8 @@ export class AddUserDialog extends Component {
     valuetext: "",
   };
 
-  fetchRoleList = () => {
-    axios.get("http://127.0.0.1:8080/policy/role").then((res) => {
+  fetchRoleList = async () => {
+     await axios.get("http://0.0.0.0:8080/policy/role").then((res) => {
       console.log(res);
       this.setState({
         roleList: res.data,
@@ -46,7 +46,7 @@ export class AddUserDialog extends Component {
   clickMe = () => {
     this.props.clickMe();
   };
- /*  handleSaveUser = () => {
+   handleSaveUser = () => {
     let user = {
       name: `${this.state.userForm.name}`,
       confidence: `${this.state.userForm.confidence}`,
@@ -59,7 +59,7 @@ export class AddUserDialog extends Component {
       open: !this.state,
     });
   };
- */
+ 
 handleSaveUser = () => {
     Object.keys(this.state.userForm).map(key => {
       console.log(this.state.userForm[key]);
