@@ -11,15 +11,30 @@ import { makeStyles } from "@material-ui/core";
 import CardContent from "@material-ui/core/CardContent";
 
 export default function Badges() {
+ 
   const useStyles = makeStyles((theme) => ({
     root: {
+      maxWidth: 345,
       padding: theme.spacing(2),
       display: "flex",
       overflow: "auto",
-      flexDirection: "column",
+      flexDirection: "column"
     },
-
-    media: {},
+    media: {
+      height: 0,
+      paddingTop: '56.25%', // 16:9
+    },
+    expand: {
+      transform: 'rotate(0deg)',
+      marginLeft: 'auto',
+      transition: theme.transitions.create('transform', {
+        duration: theme.transitions.duration.shortest,
+      }),
+    },
+    expandOpen: {
+      transform: 'rotate(180deg)',
+    },
+   
   }));
   const [badgesList, setbadgesList] = useState([]);
   const [reload, setreload] = useState(false);
@@ -62,7 +77,7 @@ export default function Badges() {
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
-                  image="m5.jpg"
+                  image="/components/m5.jpg"
                   title="m5"
                 />
                 <CardContent>
@@ -74,7 +89,10 @@ export default function Badges() {
                     color="textSecondary"
                     component="p"
                   >
-                    ID: {badge.bid}
+                    Badge ID: {badge.bid}
+                  </Typography>
+                  <Typography>
+                    Badge holder: {badge.uid}
                   </Typography>
                 </CardContent>
               </CardActionArea>

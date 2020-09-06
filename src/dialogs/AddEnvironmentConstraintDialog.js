@@ -3,27 +3,49 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
+  DialogContentText,
+  FormControlLabel,
+  Slider,
+  Select,
+  DialogActions,
+  Radio,
   RadioGroup,
   FormControl,
+  Button,
   FormLabel,
+  Typography,
+  TextField,
 } from "@material-ui/core";
-import { getConstraintNumber, createConstraint } from "../services/ConstraintService";
+import {
+  getConstraintNumber,
+  createConstraint,
+} from "../services/ConstraintService";
+import {useState} from 'react';
 
 export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
   const [open, setopen] = useState(false);
   const [action, setaction] = useState("a");
   const [accelerationvalues, setaccelerationvalues] = useState({
-      minx: -2,
-      miny: 2,
-      minz: -2,
-      maxx: 2,
-      maxy: -2,
-      maxz: 2
-  })
+    minx: -2,
+    miny: 2,
+    minz: -2,
+    maxx: 2,
+    maxy: -2,
+    maxz: 2,
+  });
+  const [accelerationX, setaccelerationX] = useState([-2, 2]);
+  const [accelerationY, setaccelerationY] = useState([-2, 2]);
+  const [accelerationZ, setaccelerationZ] = useState([-2, 2]);
+
+  const [gyroX, setgyroX] = useState([-2, 2]);
+  const [gyroY, setgyroY] = useState([-2, 2]);
+  const [gyroZ, setgyroZ] = useState([-2, 2]);
+
   const [agentLocation, setagentLocation] = useState({
-    longitude: 112.15415610,
-    latitude: 152.5150
-  })
+    longitude: 112.1541561,
+    latitude: 152.515,
+    diameter: 12.0,
+  });
 
   const [gyrovalues, setgyrovalues] = useState({
     minx: -2,
@@ -31,17 +53,17 @@ export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
     minz: -2,
     maxx: 2,
     maxy: -2,
-    maxz: 2
-})
+    maxz: 2,
+  });
   // for gyro & acceleration values
   const valuestext = (value) => {
-      return `${value.minx} ${value.miny} ${value.minz} ${value.maxx} ${value.maxy} ${value.maxz}`
-  }
+    return `${value.minx} ${value.miny} ${value.minz} ${value.maxx} ${value.maxy} ${value.maxz}`;
+  };
 
   // for agentLocation values
   const agentLocationText = (value) => {
-    return `${value.longitude} ${value.latitude}`
-  }
+    return `${value.longitude} ${value.latitude}`;
+  };
 
   const actions = [
     {
@@ -68,27 +90,27 @@ export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
   const permissions = [{ name: "allow" }, { name: "deny" }];
 
   const constraintTypes = [
-      {
-          name: 'Acceleration',
-          value: 'Acceleration'
-      },
-      {
-        name: 'Gyro',
-        value: 'Gyro'
+    {
+      name: "",
+      value: "",
     },
     {
-        name: 'Agent Location',
-        value: 'AgentLocation'
+      name: "Acceleration",
+      value: "Acceleration",
     },
     {
-        name: 'Time of Request',
-        value: 'TimeOfRequest'
+      name: "Gyro",
+      value: "Gyro",
     },
     {
-        name: 'Acceleration',
-        value: 'Acceleration'
+      name: "Agent Location",
+      value: "AgentLocation",
     },
-  ]
+    {
+      name: "Time of Request",
+      value: "TimeOfRequest",
+    },
+  ];
 
   const handleClickOpen = () => {
     setopen(!open);
@@ -103,14 +125,43 @@ export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
   });
   const [p_or_a, setp_or_a] = useState("Permission");
   const [permission, setpermission] = useState("allow");
-  const [mobility, setmobility] = useState("");
   const [type, settype] = useState("");
-  
+
   const handleAuthorizationChange = (event) => {
     setp_or_a(event.target.value);
   };
 
+  const handleTypeChange = (event) => {
+    settype(event.target.value);
+  };
+
   const handleSaveConstraint = () => {
+    switch (type) {
+      case "Gyro":
+        setconstraint({
+          ...constraint,
+          id: `${getConstraintNumber(roleid, levelid) + 1}`,
+          permission_or_action: p_or_a,
+          specific_type: type,
+          arg: valuestext(gyrovalues),
+        });
+      case "Acceleration":
+        setconstraint({
+          ...constraint,
+          id: `${getConstraintNumber(roleid, levelid) + 1}`,
+          permission_or_action: p_or_a,
+          specific_type: type,
+          arg: valuestext(accelerationvalues),
+        });
+      case "AgentLocation":
+        setconstraint({
+          ...constraint,
+          id: `${getConstraintNumber(roleid, levelid) + 1}`,
+          permission_or_action: p_or_a,
+          specific_type: type,
+          arg: agentLocationText(agentLocation),
+        });
+    }
   };
 
   const handleChangePermission = (event) => {
@@ -118,8 +169,8 @@ export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
   };
 
   const handleChangeAction = (event) => {
-      setaction(event.target.value);
-  }
+    setaction(event.target.value);
+  };
 
   return (
     <div>
@@ -140,24 +191,146 @@ export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
                 name="constraintType"
                 value={type}
                 onChange={handleTypeChange}
-              >{
-                constraintTypes.map(type => {
-                  return(
+              >
+                {constraintTypes.map((type) => {
+                  return (
                     <FormControlLabel
-                  value={type.value}
-                  control={<Radio />}
-                  label={type.name}
-                />
-                  )
-                })
-              }
+                      value={type.value}
+                      control={<Radio />}
+                      label={type.name}
+                    />
+                  );
+                })}
               </RadioGroup>
             </FormControl>
-
           </div>
           {/* here type your constraint type config inputs */}
           <div>
+            {
+              // must change ID
+              {
+                'Acceleration': (
+                  <>
+                    <Typography id="range-slider-acc-x" gutterBottom>
+                      Acceleration on axe X
+                    </Typography>
+                    <Slider
+                      value={accelerationX}
+                      onChange={(event) => {
+                        setaccelerationvalues({
+                          ...accelerationvalues,
+                          minx: event.tatget.value[0],
+                          maxx: event.target.value[1],
+                        });
+                      }}
+                      valueLabelDisplay="auto"
+                      aria-labelledby="range-slider-acc-x"
+                    />
+                    <Typography id="range-slider-acc-y" gutterBottom>
+                      Acceleration on axe Y
+                    </Typography>
+                    <Slider
+                      value={accelerationY}
+                      onChange={(event) => {
+                        setaccelerationvalues({
+                          ...accelerationvalues,
+                          miny: event.tatget.value[0],
+                          maxy: event.target.value[1],
+                        });
+                      }}
+                      valueLabelDisplay="auto"
+                      aria-labelledby="range-slider-acc-y"
+                    />
 
+                    <Typography id="range-slider-acc-z" gutterBottom>
+                      Acceleration on axe Z
+                    </Typography>
+                    <Slider
+                      value={accelerationZ}
+                      onChange={(event) => {
+                        setaccelerationvalues({
+                          ...accelerationvalues,
+                          minz: event.tatget.value[0],
+                          maxz: event.target.value[1],
+                        });
+                      }}
+                      valueLabelDisplay="auto"
+                      aria-labelledby="range-slider-acc-z"
+                    />
+                  </>
+                ),
+
+                'Gyro': (
+                  <>
+                    <Typography id="range-slider-gyro-x" gutterBottom>
+                      Gyro on axe X
+                    </Typography>
+                    <Slider
+                      value={gyroX}
+                      onChange={(event) => {
+                        setgyrovalues({
+                          ...gyrovalues,
+                          minx: event.target.value[0],
+                          maxx: event.target.value[1],
+                        });
+                      }}
+                      valueLabelDisplay="auto"
+                      aria-labelledby="range-slider-gyro-x"
+                    />
+                    <Typography id="range-slider-gyro-y" gutterBottom>
+                      Gyro on axe Y
+                    </Typography>
+                    <Slider
+                      value={gyroY}
+                      onChange={(event) => {
+                        setgyrovalues({
+                          ...gyrovalues,
+                          miny: event.target.value[0],
+                          maxy: event.target.value[1],
+                        });
+                      }}
+                      valueLabelDisplay="auto"
+                      aria-labelledby="range-slider-gyro-y"
+                    />
+                    <Typography id="range-slider-gyro-x" gutterBottom>
+                      Gyro on axe X
+                    </Typography>
+                    <Slider
+                      value={gyroZ}
+                      onChange={(event) => {
+                        setgyrovalues({
+                          ...gyrovalues,
+                          minz: event.target.value[0],
+                          maxz: event.target.value[1],
+                        });
+                      }}
+                      valueLabelDisplay="auto"
+                      aria-labelledby="range-slider-gyro-z"
+                    />
+                    
+                  </>
+                ),
+
+                'AgentLocation': <>
+                    <Typography>Agent Location</Typography>
+                    <TextField
+                     label="latitude"
+                     value={agentLocation.latitude}
+                    onChange={(event) => {setagentLocation({
+                      ...agentLocation,
+                      latitude: event.target.value
+                    })}}/>
+
+                    <TextField
+                     label="latitude"
+                     value={agentLocation.longitude}
+                    onChange={(event) => {setagentLocation({
+                      ...agentLocation,
+                      longitude: event.target.value
+                    })}}/>
+                </>,
+              }[type]
+            }
           </div>
           <div>
             <FormControl component="fieldset">
@@ -184,19 +357,22 @@ export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
           </div>
           <div>
             <FormControl>
-              <FormLabel>{permission_or_action}</FormLabel>
+              <FormLabel>{p_or_a}</FormLabel>
 
               {
-                (permission_or_action === "permission" && (
+                (p_or_a === "Permission" && (
                   <>
-                    <Select value={permission} onChange={handleChangePermission}>
+                    <Select
+                      value={permission}
+                      onChange={handleChangePermission}
+                    >
                       {permissions.map((p) => (
                         <option value={p.name}>{p.name}</option>
                       ))}
                     </Select>
                   </>
                 )) ||
-                  (permission_or_action === "action" && (
+                  (p_or_a === "Action" && (
                     <>
                       <Select value={action} onChange={handleChangeAction}>
                         {actions.map((a) => (

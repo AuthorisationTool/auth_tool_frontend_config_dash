@@ -1,74 +1,87 @@
-import React, { Component } from 'react'
-import Axios from 'axios'
+import React from "react";
+import axios from "Axios";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  FormControl,
+  FormLabel,
+  TextField,
+} from "@material-ui/core";
+export default function AddBadgeDialog() {
+  const [badgeFrom, setbadgeFrom] = useState({
+    bid: "",
+    hid: "",
+  });
 
-export default class AddBadgeDialog extends Component {
-    state = {
-        open: false,
-        userList: [],
-        badgeForm: {
-            bid: '',
-        holder_uid: ''}
-    }
+  const [open, setopen] = useState(false);
 
-    fetchUserList = () => {
-        Axios.get('http://localhost:8080/users').then( res => {
-            this.setState({
-                userList: res.data,
-            });
-        })
-    }
+  const handleClickOpen = () => {
+    setopen(!open);
+  };
 
-    handleClickOpen = () =>{
+  const handleChange = (name) => {
+    setbadgeFrom({
+      ...badgeFrom,
+      [name]: event.target.value,
+    });
+  };
 
-        this.fetchUserList();
-        this.setState({
-            open: !this.state.open,
-        })
-    }
+  const handleScanBtnClick = () => {};
 
-    
+  const [userList, setuserList] = useState([]);
 
+  const fetchUserList = () => {
+    axios.get("http://localhost:8080/users").then((res) => {
+      console.log(res);
+      setuserList(res.data);
+    });
+  };
 
-    render() {
+  useEffect(() => {
+    fetchUserList;
+  }, []);
 
-        const {open, userList, badgeForm: {bid,holder_uid}} = this.state;
-        return (
-            <div>
-                 <Button variant="contained" size="small" color="primary" onClick={this.handleClickOpen}>
-                  Scan 
-              </Button>
-        <Dialog open={open} onClose={this.handleClickOpen} aria-labelledby="form-dialog-title">
-          <DialogTitle id="form-dialog-title">Add a new badge</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Fill this form below and click on 'SAVE' to save the Badge 
-            </DialogContentText>
-            <FormControl style={{top: 11,}}>
-            <FormLabel>Name of role</FormLabel>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="rolename"
-              type="text"
-              value={this.props.rolename}
-              onChange={this.handleChange("rolename")}
-              fullWidth
-              className="textff"
-            />
-            <FormHelperText id="my-helper-text">*Required</FormHelperText>
-           </FormControl>
-           
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClickOpen} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={(event) => this.handleSave(rolename,argument)} color="primary" variant="contained">
-              Save
-            </Button>
-          </DialogActions>
-        </Dialog>
-            </div>
-        )
-    }
+  return (
+    <div>
+      <Button
+        label="Add a new Badge"
+        color="primary"
+        onClick={handleClickOpen}
+      />
+      <Dialog open={open} onClose={handleClickOpen}>
+      <DialogTitle>Add a new Badge</DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          Power on the badge and click on scan to register it in the database
+        </DialogContentText>
+        <div>
+          <FormControl>
+            <FormLabel>Badge ID</FormLabel>
+            <TextField label="Badge ID" id="bid" value={bid} disabled />
+            <Button onClick={handleScanBtnClick} label="Scan" />
+          </FormControl>
+          <FormControl>
+            <FormLabel>Holder of badge</FormLabel>
+            <Select
+              labelId="holder"
+              id="holder"
+              value={badgeFrom.holder}
+              onChange={handleChange("holder")}
+            >
+              {userList.map((user) => {
+                return <MenuItem value={user.id}>{user.name}</MenuItem>;
+              })}
+            </Select>
+          </FormControl>
+        </div>
+      </DialogContent>
+      <DialogActions>
+        <Button label="CANCEL" color="secondary" onClick={handleClickOpen} />
+        <Button label= "SAVE" color="primary" onClick={handleSaveBadge}/>
+      </DialogActions>
+      </Dialog>
+    </div>
+  );
 }

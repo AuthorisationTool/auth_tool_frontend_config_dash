@@ -21,8 +21,6 @@ import Typography from '@material-ui/core/Typography';
 import DialogActions from '@material-ui/core/DialogActions';
 
 
-
-
 export default function AddProfileConstraintDialog({ roleid, levelid }) {
   const [open, setopen] = useState(false);
   const actions = [
@@ -53,7 +51,6 @@ export default function AddProfileConstraintDialog({ roleid, levelid }) {
     setopen(!open);
   };
 
-  const [confidence, setconfidence] = useState("");
   const [constraint, setconstraint] = useState({
     id: "",
     permission_or_action: "",
@@ -62,7 +59,6 @@ export default function AddProfileConstraintDialog({ roleid, levelid }) {
     arg: "",
   });
   const [p_or_a, setp_or_a] = useState("Permission");
-  const [permission, setpermission] = useState("allow");
   const [mobility, setmobility] = useState("");
   const [type, settype] = useState("Mobility");
   const [openMob, setopenMob] = useState(false);
@@ -85,39 +81,37 @@ export default function AddProfileConstraintDialog({ roleid, levelid }) {
   const handleAuthorizationChange = (event) => {
     setp_or_a(event.target.value);
   };
-  const handleChangeConfidence = (event) => {
-    setconfidencerange(event.target.value);
-    setconfidence(textvalue(confidencerange));
-  };
+  
 
-  const textvalue = (value) => {
-    return `${value[0]} ${value[1]}`;
-  };
   const handleSaveConstraint = () => {
     switch (type) {
       case "Mobility":
         setconstraint({
           ...constraint,
           id: `${getConstraintNumber(roleid, levelid) + 1}`,
-          permission_or_action: permission,
           specific_type: type,
           arg: mobility,
         });
+        break;
       case "Confidence":
         setconstraint({
           ...constraint,
           id: `${getConstraintNumber(roleid, levelid) + 1}`,
-          permission_or_action: permission,
-          specific_type: "Confidence",
-          arg: confidence,
+          specific_type: type,
+          arg: `${confidencerange[0]} ${confidencerange[1]}`
         });
-        handleClickOpen();
+        break;
+        
     }
+    handleClickOpen();
     createConstraint(roleid, levelid, constraint);
   };
 
   const handleChangePermission = (event) => {
-    setpermission(event.target.value);
+    setconstraint({
+      ...constraint,
+      permission_or_action: event.target.value,
+    })
   };
 
   const handleChangeAction = () => {}
@@ -185,7 +179,7 @@ export default function AddProfileConstraintDialog({ roleid, levelid }) {
                   </Typography>
                   <Slider
                     value={confidencerange}
-                    onChange={handleChangeConfidence}
+                    onChange={(event, value) => {setconfidencerange([value[0],value[1]])}}
                     valueLabelDisplay="auto"
                     aria-labelledby="range-slider"
                   />

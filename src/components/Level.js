@@ -5,10 +5,11 @@ import {Box, Button, Paper,Typography, Grid, makeStyles, ButtonGroup} from '@mat
 import Axios from 'axios';
 import {deleteLevel} from '../services/LevelService'
 import AddProfileConstraintDialog from '../dialogs/AddProfileConstraintDialog';
+import AddEnvironmentConstraintDialog from '../dialogs/AddEnvironmentConstraintDialog';
 {/*
     props include : [ props.roledid, props.levelid , props.model]
 */}
-export default function Level(props) {
+export default function Level (props) {
 
     const useStyles = makeStyles((theme) => ({
        
@@ -49,15 +50,12 @@ export default function Level(props) {
       return (()=>{
         setreupload(false);
       });
-    },[reupload]);
+    });
 
     const renderParent = () => {
       props.clickMe();
     }
 
-    useEffect(() => {
-        fetchConstraintList();
-    }, []);
 
     const handleDeleteLevel = () => {
       deleteLevel(props.roleid,props.levelid);
@@ -90,12 +88,12 @@ export default function Level(props) {
           </Grid>
           <Grid item xs={2} className={classes.levelcompobtn}>
             <ButtonGroup orientation='vertical'>
-            {(props.model == "ProfileBasedAccessControl" && <>
+            {(props.model === "ProfileBasedAccessControl" && <>
             <AddProfileConstraintDialog roleid={props.roleid} levelid={props.levelid}/>
             </>)
             ||
             (props.model === "ContextBasedAccessControl" && <>
-            <AddProfileConstraintDialog roleid={props.id} levelid={props.levelid}/>
+            <AddEnvironmentConstraintDialog roleid={props.id} levelid={props.levelid}/>
             </>)}
              <Button variant='contained' size='small' color='primary' onClick={handleDeleteLevel}>delete level</Button>
              </ButtonGroup>

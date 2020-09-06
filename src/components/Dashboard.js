@@ -145,11 +145,6 @@ export default function Dashboard() {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Dashboard
           </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
         </Toolbar>
       </AppBar>
       <BrowserRouter>
@@ -183,7 +178,7 @@ export default function Dashboard() {
                 <Route exact path="/Users" component={Users} render={(props) => (<><Users/></>)}/>
                 <Route exact path="/Application" component={Roles} render={(props) => (<><Roles/></>)}/>
                 <Route exact path="/Firewall" component={Roles} render={(props) => (<><Roles/></>)}/>
-                <Route exact path="/Bluetooth_agent" component={Badges} render={(props) => (<><Badges/></>)}/>
+                <Route exact path="/Bluetooth_Badges" component={Badges} render={(props) => (<><Badges/></>)}/>
               </Switch>
                 
           
