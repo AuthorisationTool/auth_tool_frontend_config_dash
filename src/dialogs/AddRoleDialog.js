@@ -26,17 +26,14 @@ state = {
     })
 }
 
-clickMe = () => {
-  this.props.clickMe();
-}
+
 
 handleSave = (rolename,argument) => {
   createRole(rolename,argument,"somethinng");
-  this.clickMe();
   this.setState({
     open: !this.state.open,
   })
-  
+  this.props.clickMe();
 }
 
 handleChange = name => ({target: {value} }) => {

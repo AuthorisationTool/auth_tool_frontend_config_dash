@@ -118,7 +118,7 @@ export default function AddProfileConstraintDialog({ roleid, levelid }) {
 
   return (
     <div>
-      <Button label="Add Constraint" onClick={handleClickOpen} />
+      <Button variant="outlined" color='primary' size='small'  onClick={handleClickOpen} >Add constraint</Button>
       <Dialog open={open} onClose={handleClickOpen}>
         <DialogTitle>Add a new profile constraint</DialogTitle>
         <DialogContent>

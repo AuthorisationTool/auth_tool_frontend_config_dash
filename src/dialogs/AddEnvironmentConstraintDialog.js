@@ -15,15 +15,17 @@ import {
   FormLabel,
   Typography,
   TextField,
+  ThemeProvider,
 } from "@material-ui/core";
 import {
   getConstraintNumber,
   createConstraint,
 } from "../services/ConstraintService";
+import makeStyles from 'react';
 import {useState} from 'react';
 
 export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
-  const [open, setopen] = useState(false);
+   const [open, setopen] = useState(false);
   const [action, setaction] = useState("a");
   const [accelerationvalues, setaccelerationvalues] = useState({
     minx: -2,
@@ -174,7 +176,7 @@ export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
 
   return (
     <div>
-      <Button label="Add Constraint" onClick={handleClickOpen} />
+      <Button size='small' variant='outlined'  onClick={handleClickOpen} >Add constraint</Button>
       <Dialog open={open} onClose={handleClickOpen}>
         <DialogTitle>Add a new profile constraint</DialogTitle>
         <DialogContent>

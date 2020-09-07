@@ -45,7 +45,7 @@ const StyledTableRow = withStyles((theme) => ({
 const [userList, setuserList] = useState([]);
 const [reupload, setreupload] = useState(false);
 const fetchUserList =  () => {
-  axios.get('http://127.0.0.1:8080/users').then(res => {
+  axios.get('http://localhost:8080/users').then(res => {
   console.log(res);
   setuserList(res.data)});
 }

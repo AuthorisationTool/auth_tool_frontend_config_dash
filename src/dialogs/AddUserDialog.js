@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { createUser } from "../services/UserService";
 import Button from "@material-ui/core/Button";
 import Select from "@material-ui/core/Select";
@@ -15,7 +15,8 @@ import Slider from "@material-ui/core/Slider";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 
-export class AddUserDialog extends Component {
+export default function AddUserDialog(props) {
+/* export class AddUserDialog extends Component {
   state = {
     open: false,
     roleList: [],
@@ -26,83 +27,72 @@ export class AddUserDialog extends Component {
       memberOf: "",
     },
     valuetext: "",
-  };
+  }; */
 
-  fetchRoleList = async () => {
-     await axios.get("http://0.0.0.0:8080/policy/role").then((res) => {
+  const [open, setopen] = useState(false);
+  const [roleList, setroleList] = useState([]);
+  const [userForm, setuserForm] = useState({
+    name: '',
+    confidence: 0,
+    mobility:'',
+    memberOf: '',
+  })
+  const [valuetext, setvaluetext] = useState("");
+  
+  const fetchRoleList =  () => {
+      axios.get("http://localhost:8080/policy/role").then((res) => {
       console.log(res);
-      this.setState({
-        roleList: res.data,
-      });
-    });
-  };
-  handleClickOpen = () => {
-    this.setState({
-      open: !this.state.open,
+      setroleList(res.data);
     });
   };
 
-
-  clickMe = () => {
-    this.props.clickMe();
+  const handleClickOpen = () => {
+    setopen(!open);
   };
-   handleSaveUser = () => {
-    let user = {
-      name: `${this.state.userForm.name}`,
-      confidence: `${this.state.userForm.confidence}`,
-      mobility: `${this.state.userForm.mobiltiy}`,
-      memberOf: `${this.state.userForm.memberOf}`,
-    };
-    createUser(user);
-    this.clickMe();
-    this.setState({
-      open: !this.state,
-    });
+
+  useEffect(() => {
+    fetchRoleList();
+  }, [])
+  
+
+
+ 
+   const handleSaveUser = () => {
+    createUser(userForm);
+    setopen(!open);
+    props.clickMe();
   };
  
-handleSaveUser = () => {
-    Object.keys(this.state.userForm).map(key => {
-      console.log(this.state.userForm[key]);
+  const handleChange = (name) => ({ target: { value } }) => {
+    setuserForm({
+      ...userForm,
+      [name]: value,
     })
-}
-  handleChange = (name) => ({ target: { value } }) => {
-    
-    this.setState({
-      userForm: {
-        ...this.state.userForm,
-        [name]: value,
-      },
-    });
   };
 
-  render() {
-    let {
-      open,
-      userForm: { name, confidence, mobility, memberOf },
-      roleList,
-    } = this.state;
+  
+ 
    
     const handleSlider = (event,value) => {
-      this.setState({
-        userForm: {
-          ...this.state.userForm,
-          confidence: value,
-        },
-      });
-    }
+      setuserForm({
+        ...userForm,
+        confidence: value 
+      })
+      };
+    
     return (
       <div align="right" style={{ margin: 10 }}>
         <Button
           variant="contained"
           size="small"
           color="primary"
-          onClick={this.handleClickOpen}
+          onClick={handleClickOpen}
         >
           + add new User
         </Button>
         <Dialog
           open={open}
-          onClose={this.handleClickOpen}
+          onClose={handleClickOpen}
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">Add a new User</DialogTitle>
@@ -120,8 +110,8 @@ handleSaveUser = () => {
                   autoFocus
                   margin="dense"
                   id="name"
-                  value={name}
-                  onChange={this.handleChange("name")}
+                  value={userForm.name}
+                  onChange={handleChange("name")}
                 />
               
             </FormControl>
@@ -134,8 +124,8 @@ handleSaveUser = () => {
                 <Select
                   labelId="Role"
                   id="role"
-                  value={memberOf}
-                  onChange={this.handleChange("memberOf")}
+                  value={userForm.memberOf}
+                  onChange={handleChange("memberOf")}
                 >
                   {roleList.map((role) => {
                     return (
@@ -175,10 +165,9 @@ handleSaveUser = () => {
                   labelId="Mobility"
                   id="mobility"
                   style={{width: 200}}
-                  value={mobility}
-                  onChange={this.handleChange("mobility")}
+                  value={userForm.mobility}
+                  onChange={handleChange("mobility")}
                 >
-                  <MenuItem value=""></MenuItem>
                   <MenuItem value="home">Home</MenuItem>
                   <MenuItem value="abroad">Abroad</MenuItem>
                 </Select>
@@ -189,11 +178,11 @@ handleSaveUser = () => {
             </div>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClickOpen} color="primary">
+            <Button onClick={handleClickOpen} color="primary">
               Cancel
             </Button>
             <Button
-              onClick={this.handleSaveUser}
+              onClick={handleSaveUser}
               color="primary"
               variant="contained"
             >
@@ -204,6 +193,4 @@ handleSaveUser = () => {
       </div>
     );
   }
-}
 
-export default AddUserDialog;

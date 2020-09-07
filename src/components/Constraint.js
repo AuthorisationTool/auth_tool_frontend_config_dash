@@ -54,6 +54,7 @@ export default function Constraint(props) {
         <CardContent>
       <Typography variant="body">
       <ul>
+        <li><strong>ID :</strong>{props.id}</li>
         <li><strong>Type :</strong>{props.type}</li>
         <li><strong>{props.name} :</strong>{props.arg}</li>
         <li><strong>Permission : </strong>{props.permission}</li>
