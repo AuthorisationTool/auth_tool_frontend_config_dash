@@ -95,10 +95,12 @@ export default function Level (props) {
       <ButtonGroup orientation='vertical' size="small" >
           {
             (props.model === 'ProfileBasedAccessControl' && <AddProfileConstraintDialog
+             clickMe={() => setreupload(true)} 
              roleid={props.roleid}
              levelid={props.levelid}/>)
             ||
             (props.model === 'ContextBasedAccessControl' && <AddEnvironmentConstraintDialog
+            clickMe={() => setreupload(true)}
             roleid={props.roleid}
             levelid={props.levelid}/>)
           }        

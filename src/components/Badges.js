@@ -61,25 +61,18 @@ export default function Level (props) {
       props.clickMe();
     }
 
-
-    const handleDeleteLevel = () => {
-      deleteLevel(props.roleid,props.levelid);
-      renderParent();
-    }
     
 
     const classes = useStyles();
 
     return (
         
-        
+      <Paper elevation={3} className={classes.rolepaper}>
           <Grid container className={classes.root} spacing={3}>
               
           <Paper elevation={3} >
           <Box border={1} borderColor="primary.main">
           <Grid container justify="center" xs={12} classeName={classes.level}>
-          
-          
             
           </Grid>
           </Box>
@@ -94,6 +87,7 @@ export default function Level (props) {
         </Paper>
           
           </Grid>
+          </Paper>
     
     );
 }

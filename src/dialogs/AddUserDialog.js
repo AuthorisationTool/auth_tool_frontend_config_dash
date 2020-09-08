@@ -16,18 +16,6 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 
 export default function AddUserDialog(props) {
-/* export class AddUserDialog extends Component {
-  state = {
-    open: false,
-    roleList: [],
-    userForm: {
-      name: "",
-      confidence: 0,
-      mobility: "",
-      memberOf: "",
-    },
-    valuetext: "",
-  }; */
 
   const [open, setopen] = useState(false);
   const [roleList, setroleList] = useState([]);

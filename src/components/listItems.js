@@ -53,7 +53,7 @@ export default function MainListItems(){
       </ListItem>
   
 
-      
+      {/* 
       <ListItem button component={Link} to="/Application">
         <ListItemIcon>
           <AssignmentIcon />
@@ -68,7 +68,7 @@ export default function MainListItems(){
            <AssignmentIcon />
          </ListItemIcon>
         <ListItemText primary="Firewall" />
-      </ListItem>
+      </ListItem> */}
       
 
       

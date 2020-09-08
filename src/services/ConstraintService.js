@@ -6,7 +6,7 @@ export async function getConstraintsAll(roleid,levelid){
 
 export async function createConstraint(roleid,levelid,constraint){
     await http.post(`/role/${roleid}/level/${levelid}/constraint`,{
-        "id": `${constraint.id}`,
+        "id": parseInt(constraint.id),
         "permission_or_action": `${constraint.permission_or_action}`,
         "constraint_type": `${constraint.constraint_type}`,
         "specific_type": `${constraint.specific_type}`,

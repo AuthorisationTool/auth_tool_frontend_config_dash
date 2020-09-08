@@ -43,18 +43,16 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 const [userList, setuserList] = useState([]);
-const [reupload, setreupload] = useState(false);
+const [reupload, setreupload] = useState(true);
 const fetchUserList =  () => {
   axios.get('http://localhost:8080/users').then(res => {
   console.log(res);
   setuserList(res.data)});
 }
-useEffect(() => {
-  fetchUserList();
- },[]);
 
  useEffect(()=>{
-  fetchUserList();
+   if(reupload){
+  fetchUserList();}
   return () => {
     setreupload(false);
   }

@@ -21,11 +21,11 @@ import {
   getConstraintNumber,
   createConstraint,
 } from "../services/ConstraintService";
-import makeStyles from 'react';
-import {useState} from 'react';
+import makeStyles from "react";
+import { useState } from "react";
 
 export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
-   const [open, setopen] = useState(false);
+  const [open, setopen] = useState(false);
   const [action, setaction] = useState("a");
   const [accelerationvalues, setaccelerationvalues] = useState({
     minx: -2,
@@ -93,10 +93,6 @@ export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
 
   const constraintTypes = [
     {
-      name: "",
-      value: "",
-    },
-    {
       name: "Acceleration",
       value: "Acceleration",
     },
@@ -119,7 +115,7 @@ export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
   };
 
   const [constraint, setconstraint] = useState({
-    id: "",
+    id: 0,
     permission_or_action: "",
     constraint_type: "EnvironmentConstraint",
     specific_type: "",
@@ -142,7 +138,7 @@ export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
       case "Gyro":
         setconstraint({
           ...constraint,
-          id: `${getConstraintNumber(roleid, levelid) + 1}`,
+          id: getConstraintNumber(roleid, levelid)+1,
           permission_or_action: p_or_a,
           specific_type: type,
           arg: valuestext(gyrovalues),
@@ -150,7 +146,7 @@ export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
       case "Acceleration":
         setconstraint({
           ...constraint,
-          id: `${getConstraintNumber(roleid, levelid) + 1}`,
+          id: getConstraintNumber(roleid, levelid)+1,
           permission_or_action: p_or_a,
           specific_type: type,
           arg: valuestext(accelerationvalues),
@@ -158,12 +154,15 @@ export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
       case "AgentLocation":
         setconstraint({
           ...constraint,
-          id: `${getConstraintNumber(roleid, levelid) + 1}`,
+          id: getConstraintNumber(roleid, levelid)+1,
           permission_or_action: p_or_a,
           specific_type: type,
           arg: agentLocationText(agentLocation),
         });
     }
+
+    createConstraint(constraint);
+    
   };
 
   const handleChangePermission = (event) => {
@@ -176,17 +175,25 @@ export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
 
   return (
     <div>
-      <Button size='small' color='primary' variant='outlined'  onClick={handleClickOpen} >Add constraint</Button>
+      <Button
+        size="small"
+        color="primary"
+        variant="outlined"
+        onClick={handleClickOpen}
+      >
+        Add constraint
+      </Button>
       <Dialog open={open} onClose={handleClickOpen}>
-        <DialogTitle>Add a new profile constraint</DialogTitle>
+        <DialogTitle>Add a new environment constraint</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Fill this form and click on Save to create the profile constraint
+            Fill this form and click on Save to create the environment
+            constraint
           </DialogContentText>
           <div>
             <FormControl component="fieldset">
               <FormLabel component="legend">
-                Type of profile constraint
+                Type of environment constraint
               </FormLabel>
               <RadioGroup
                 aria-label="gender"
@@ -211,7 +218,7 @@ export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
             {
               // must change ID
               {
-                'Acceleration': (
+                Acceleration: (
                   <>
                     <Typography id="range-slider-acc-x" gutterBottom>
                       Acceleration on axe X
@@ -219,10 +226,11 @@ export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
                     <Slider
                       value={accelerationX}
                       onChange={(event, value) => {
-                        setaccelerationX([value[0],value[1]])
+                        setaccelerationX([value[0], value[1]]);
                       }}
                       valueLabelDisplay="auto"
                       aria-labelledby="range-slider-acc-x"
+                      min
                     />
                     <Typography id="range-slider-acc-y" gutterBottom>
                       Acceleration on axe Y
@@ -230,7 +238,7 @@ export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
                     <Slider
                       value={accelerationY}
                       onChange={(event, value) => {
-                          setaccelerationY([value[0],value[1]])
+                        setaccelerationY([value[0], value[1]]);
                       }}
                       valueLabelDisplay="auto"
                       aria-labelledby="range-slider-acc-y"
@@ -242,7 +250,7 @@ export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
                     <Slider
                       value={accelerationZ}
                       onChange={(event, value) => {
-                        setaccelerationZ([value[0],value[1]])
+                        setaccelerationZ([value[0], value[1]]);
                       }}
                       valueLabelDisplay="auto"
                       aria-labelledby="range-slider-acc-z"
@@ -250,15 +258,15 @@ export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
                   </>
                 ),
 
-                'Gyro': (
+                Gyro: (
                   <>
                     <Typography id="range-slider-gyro-x" gutterBottom>
                       Gyro on axe X
                     </Typography>
                     <Slider
                       value={gyroX}
-                      onChange={(event,value) => {
-                      setgyroX([value[0],value[1]])
+                      onChange={(event, value) => {
+                        setgyroX([value[0], value[1]]);
                       }}
                       valueLabelDisplay="auto"
                       aria-labelledby="range-slider-gyro-x"
@@ -268,8 +276,8 @@ export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
                     </Typography>
                     <Slider
                       value={gyroY}
-                      onChange={(event,value) => {
-                        setgyroY([value[0],value[1]]);
+                      onChange={(event, value) => {
+                        setgyroY([value[0], value[1]]);
                       }}
                       valueLabelDisplay="auto"
                       aria-labelledby="range-slider-gyro-y"
@@ -279,34 +287,52 @@ export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
                     </Typography>
                     <Slider
                       value={gyroZ}
-                      onChange={(event,value) => {
-                        setgyroZ([value[0],value[1]])
+                      onChange={(event, value) => {
+                        setgyroZ([value[0], value[1]]);
                       }}
                       valueLabelDisplay="auto"
                       aria-labelledby="range-slider-gyro-z"
                     />
-                    
                   </>
                 ),
 
-                'AgentLocation': <>
+                AgentLocation: (
+                  <>
                     <Typography>Agent Location</Typography>
                     <TextField
-                     label="latitude"
-                     value={agentLocation.latitude}
-                    onChange={(event) => {setagentLocation({
-                      ...agentLocation,
-                      latitude: event.target.value
-                    })}}/>
+                      label="latitude"
+                      value={agentLocation.latitude}
+                      onChange={(event) => {
+                        setagentLocation({
+                          ...agentLocation,
+                          latitude: event.target.value,
+                        });
+                      }}
+                    />
 
                     <TextField
-                     label="latitude"
-                     value={agentLocation.longitude}
-                    onChange={(event) => {setagentLocation({
-                      ...agentLocation,
-                      longitude: event.target.value
-                    })}}/>
-                </>,
+                      label="latitude"
+                      value={agentLocation.longitude}
+                      onChange={(event) => {
+                        setagentLocation({
+                          ...agentLocation,
+                          longitude: event.target.value,
+                        });
+                      }}
+                    />
+
+                    <TextField
+                      label="diameter"
+                      value={agentLocation.diameter}
+                      onChange={(event) => {
+                        setagentLocation({
+                          ...agentLocation,
+                          diameter: event.target.value,
+                        });
+                      }}
+                    />
+                  </>
+                ),
               }[type]
             }
           </div>
