@@ -153,9 +153,6 @@ export default function AddProfileConstraintDialog({ roleid, levelid }) {
             {(type === "Mobility" && (
               <>
                 <FormControl>
-                  <InputLabel id="demo-controlled-open-select-label">
-                    Age
-                  </InputLabel>
                   <Select
                     labelId="demo-controlled-open-select-label"
                     id="demo-controlled-open-select"

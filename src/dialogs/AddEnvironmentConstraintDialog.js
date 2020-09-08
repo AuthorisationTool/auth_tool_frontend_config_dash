@@ -176,7 +176,7 @@ export default function AddEnvironmentConstraintDialog({ roleid, levelid }) {
 
   return (
     <div>
-      <Button size='small' variant='outlined'  onClick={handleClickOpen} >Add constraint</Button>
+      <Button size='small' color='primary' variant='outlined'  onClick={handleClickOpen} >Add constraint</Button>
       <Dialog open={open} onClose={handleClickOpen}>
         <DialogTitle>Add a new profile constraint</DialogTitle>
         <DialogContent>
